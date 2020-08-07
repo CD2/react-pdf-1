@@ -87,7 +87,15 @@ const getFragments = (fontStore, instance) => {
         attributes,
       });
     } else if (child) {
-      fragments.push(...getFragments(child));
+      if (child.type === 'TEXT') {
+        // cascade the styles
+        child.style = { ...instance.style, ...child.style };
+        fragments.push(...getFragments(fontStore, child));
+      } else {
+        console.log(child);
+        // fragments.push(...getFragments(child));
+      }
+      // fragments.push(...getFragments(child));
     }
   }
 
